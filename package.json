@@ -1,0 +1,21 @@
+{
+  "name": "bergerie_sn",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "cherif",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "deep-email-validator": "^0.1.21",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.3",
+    "morgan": "^1.10.0",
+    "uuid": "^10.0.0"
+  }
+}
