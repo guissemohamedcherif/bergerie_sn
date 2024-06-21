@@ -3,15 +3,14 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require ('bcrypt');
 const { validate } = require('deep-email-validator');
 
-// accessTokens
 function generateAccessToken(user) {
-    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15m"}) 
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: process.env.ACCESS_TOKEN_EXPIRATION}) 
 }
-// refreshTokens
+
 let refreshTokens = []
 function generateRefreshToken(user) {
     const refreshToken = 
-    jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {expiresIn: "20m"})
+    jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {expiresIn: process.env.REFRESH_TOKEN_EXPIRATION})
     refreshTokens.push(refreshToken)
     return refreshToken
 }
@@ -34,13 +33,6 @@ exports.RegisterUser = async (req, res) => {
 
 userLogin = async (req, res) => {
 
-    // const checkEmail = validate(req.body.email);
-    // if (!checkEmail.valid) {
-    //     return res.status(400).send({
-    //         status: 'error',
-    //         message: 'Email is not valid. Please try again!',
-    //     });
-    // }
     try {
         const user = await User.findOne({email: req.body.email});
         if (!user) {

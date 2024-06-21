@@ -1,23 +1,19 @@
 const User = require('../models/user');
-const bcrypt = require ('bcrypt');
-const users = [];
 const { generateAccessToken } = require('../controllers/authController'); // Correct import path
-const { validate } = require('deep-email-validator');
 const jwt = require("jsonwebtoken");
 
 
 function generatePassword() {
+    const password_charset = process.env.PASS_GENERATION_DATAS 
     var length = 8,
-        charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
         retVal = "";
-    for (var i = 0, n = charset.length; i < length; ++i) {
-        retVal += charset.charAt(Math.floor(Math.random() * n));
+    for (var i = 0, n = password_charset.length; i < length; ++i) {
+        retVal += password_charset.charAt(Math.floor(Math.random() * n));
     }
     return retVal;
 }
 
 exports.createUser = async (req, res) => {
-
     try {
         const user = new User(req.body);
         const pass = generatePassword();
@@ -36,13 +32,12 @@ exports.createUser = async (req, res) => {
 
 
 exports.getAllUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+    try {
+        const users = await User.find();
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }};
 
 exports.getUser = async (req, res) => {
     try {
